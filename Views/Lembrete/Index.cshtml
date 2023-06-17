@@ -1,4 +1,5 @@
-﻿@{
+﻿@model ListaLembreteModel
+@{
     ViewData["Title"] = "Listas de Lembretes";
 }
 
@@ -17,31 +18,32 @@
        <th scope="col"></th>
     </tr>
   </thead>
-  <tbody>
-    <tr>
-      <th scope="row"></th>
-       <td>17/06/2023</td>
-       <td><ul class="list-group list-group-flush">
-          <li class="list-group-item">Exemplo de lembrete 1    <a class="btn btn-danger" role="buton" asp-controller="Lembrete" asp-action="Apagar">x</a> </li>
-          <li class="list-group-item">Exemplo de Lembrete 2    <a class="btn btn-danger" role="buton" asp-controller="Lembrete" asp-action="Apagar">x</a></li>
-        </ul>
-      </td>
-    </tr>
-    <tr>
-      <th scope="row"></th>
-       <td>01/01/2024</td>
-      <td><ul class="list-group list-group-flush">
-          <li class="list-group-item">Exemplo de lembrete 3     <a class="btn btn-danger" role="buton" asp-controller="Lembrete" asp-action="Apagar">x</a> </li>
-          <li class="list-group-item">Exemplo de Lembrete 4     <a class="btn btn-danger" role="buton" asp-controller="Lembrete" asp-action="Apagar">x</a> </li>
-        </ul></td>
-    </tr>
-    <tr>
-       <th scope="row"></th>
-      <td>02/02/2024</td>
-      <td><ul class="list-group list-group-flush">
-          <li class="list-group-item">Exemplo de lembrete 5    <a class="btn btn-danger" role="buton" asp-controller="Lembrete" asp-action="Apagar">x</a> </li>
-        </ul></td>
-    </tr>
-  </tbody>
+ <tbody>
+            @foreach (var lembreteData in Model.LembretesPorData)
+            {
+            <tr>
+                <th scope="row"></th>
+                <td>@lembreteData.Key.ToShortDateString()</td>
+                <td>
+                    <ul class="list-group list-group-flush">
+                            @foreach (var lembrete in lembreteData.Value)
+                            {
+                                       <li class="list-group-item">@lembrete.Nome
+                                            <a class="btn btn-danger" role="button" onclick="confirmarExclusao('@lembrete.Nome')">x</a>
+                                      </li>
+
+                            }
+                    </ul>
+                </td>
+            </tr>
+            }
+</tbody>
 </table>
 </div>
+<script>
+    function confirmarExclusao(nome) {
+        if (confirm('Deseja realmente apagar o lembrete?')) {
+            window.location.href = '@Url.Action("Apagar", "Lembrete")?nome=' + nome;
+        }
+    }
+</script>
