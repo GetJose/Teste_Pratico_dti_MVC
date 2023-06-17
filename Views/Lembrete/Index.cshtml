@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Listas de Lembretes";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Lista de lembretes</h1>
+    <br /> 
+    <div clas="d-grid gap-2 d-md-flex justify-content-md-start">
+        <a class="btn btn-primary" role="buton" asp-controller="Lembrete" asp-action="CriarLembrete">Adicionar novo Lembrete</a>
+    </div>
+   <table class="table">
+  <thead>
+    <tr>
+      <th scope="col"></th>
+      <th scope="col">Data</th>
+      <th scope="col">Nome</th>
+       <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row"></th>
+       <td>17/06/2023</td>
+       <td><ul class="list-group list-group-flush">
+          <li class="list-group-item">Exemplo de lembrete 1    <a class="btn btn-danger" role="buton" asp-controller="Lembrete" asp-action="Apagar">x</a> </li>
+          <li class="list-group-item">Exemplo de Lembrete 2    <a class="btn btn-danger" role="buton" asp-controller="Lembrete" asp-action="Apagar">x</a></li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <th scope="row"></th>
+       <td>01/01/2024</td>
+      <td><ul class="list-group list-group-flush">
+          <li class="list-group-item">Exemplo de lembrete 3     <a class="btn btn-danger" role="buton" asp-controller="Lembrete" asp-action="Apagar">x</a> </li>
+          <li class="list-group-item">Exemplo de Lembrete 4     <a class="btn btn-danger" role="buton" asp-controller="Lembrete" asp-action="Apagar">x</a> </li>
+        </ul></td>
+    </tr>
+    <tr>
+       <th scope="row"></th>
+      <td>02/02/2024</td>
+      <td><ul class="list-group list-group-flush">
+          <li class="list-group-item">Exemplo de lembrete 5    <a class="btn btn-danger" role="buton" asp-controller="Lembrete" asp-action="Apagar">x</a> </li>
+        </ul></td>
+    </tr>
+  </tbody>
+</table>
+</div>

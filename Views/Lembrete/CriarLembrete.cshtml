@@ -1,0 +1,21 @@
+﻿@model LembreteModel
+@{
+    ViewData["Title"] = "Criar Lembretes";
+}
+<div class="text-center">
+    <h1 class="display-4">Criar Lembrete</h1>
+    <br /> 
+</div>
+<form asp-controller="Lembrete" asp-action="CriarLembrete" method="post">
+  <div class="form-group">
+    <label for="nome">Nome</label>
+    <input type="text" asp-for="Nome" class="form-control" placeholder="Nome do Lembrete">
+  </div>
+   <div class="form-group">
+    <label for="data">Data</label>
+    <input type="date" asp-for="Data" class="form-control" placeholder="data no formato dd/MM/aaaa">
+  </div>
+  <br />
+  <button type="submit" class="btn btn-primary">Criar</button>
+  <a class="btn btn-secondary" asp-controller="Lembrete" asp-action="Index" role="button">Voltar</a>
+</form>
