@@ -57,8 +57,15 @@ namespace Teste_Pratico_dti_MVC.Controllers
         public IActionResult Index()
         {
             ListaLembreteModel model = LembreteRepository.ListaLembretes;
+
+            if (model.LembretesPorData.Any())
+            {
+                model.LembretesPorData = model.LembretesPorData.OrderBy(d => d.Key).ToDictionary(d => d.Key, d => d.Value);
+            }
+
             return View(model);
         }
+
         public IActionResult Apagar(string nome)
         {
             bool lembreteRemovido = LembreteRepository.ListaLembretes.RemoverLembrete(nome);
