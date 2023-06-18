@@ -1,16 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using Teste_Pratico_dti_MVC.Models;
 
 namespace Teste_Pratico_dti_MVC.Controllers
 {
-	//como ainda não tem Conexão com o BD esta usando a lista de lembretes estatica para salvar os lembretes
+	// como ainda não tem Conexão com o BD esta usando a lista de lembretes estática para salvar os lembretes
 	public static class LembreteRepository
 	{
-		public static ListaLembreteModel ListaLembretes { get; } = new ListaLembreteModel();
+		public static List<LembreteModel> ListaLembretes { get; } = new List<LembreteModel>();
 	}
+
 	public class LembreteController : Controller
 	{
-		//Encaminha para a view de criar o lembrete
+		// Encaminha para a view de criar o lembrete
 		public IActionResult CriarLembrete()
 		{
 			return View();
@@ -23,21 +25,8 @@ namespace Teste_Pratico_dti_MVC.Controllers
 			{
 				if (ModelState.IsValid)
 				{
-					// Verificar se o nome está vazio
-					if (string.IsNullOrWhiteSpace(lembrete.Nome))
-					{
-						ModelState.AddModelError("Nome", "O campo nome é obrigatório. Insira um nome válido.");
-						return View(lembrete);
-					}
-					// Verificar se a data informada é válida
-					if (lembrete.Data < DateTime.Now)
-					{
-						ModelState.AddModelError("Data", "A data informada já passou. Insira uma data futura.");
-						return View(lembrete);
-					}
-
 					// Adicionar o lembrete à lista usando a instância de ListaLembretes compartilhada
-					LembreteRepository.ListaLembretes.AdicionarLembrete(lembrete);
+					LembreteRepository.ListaLembretes.Add(lembrete);
 
 					return RedirectToAction("Index"); // Redirecionar para a página inicial após a criação do lembrete
 				}
@@ -54,22 +43,27 @@ namespace Teste_Pratico_dti_MVC.Controllers
 		}
 
 		public IActionResult Index()
-		{   //Criar a lista que aparece na view de acordo com a lista de lembrete 
-			ListaLembreteModel model = LembreteRepository.ListaLembretes;
+		{
+			// Criar a lista que aparece na view de acordo com a lista de lembrete
+			List<LembreteModel> lembretes = LembreteRepository.ListaLembretes;
 
-			if (model.ListaLembretes.Any())//se ela não estiver vazia é ordenada para que as datas sejam mostradas em ordem cronologica 
+			if (lembretes.Any())//se ela não estiver vazia é ordenada para que as datas sejam mostradas em ordem cronológica 
 			{
-				model.ListaLembretes = model.ListaLembretes.OrderBy(d => d.Key).ToDictionary(d => d.Key, d => d.Value);
+				lembretes = lembretes.OrderBy(d => d.Data).ToList();
 			}
 
-			return View(model);
+			return View(lembretes);
 		}
 
 		public IActionResult Apagar(int id)
 		{
-			LembreteRepository.ListaLembretes.RemoverLembrete(id);
+			LembreteModel lembrete = LembreteRepository.ListaLembretes.Find(l => l.Id == id);
+			if (lembrete != null)
+			{
+				LembreteRepository.ListaLembretes.Remove(lembrete);
+			}
+
 			return RedirectToAction("Index");
 		}
-
 	}
 }

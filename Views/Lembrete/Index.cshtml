@@ -1,4 +1,5 @@
-﻿@model ListaLembreteModel
+﻿@model List<Teste_Pratico_dti_MVC.Models.LembreteModel>
+
 @{
 	ViewData["Title"] = "Listas de Lembretes";
 }
@@ -19,27 +20,42 @@
 	</tr>
   </thead>
  <tbody>
-			@foreach (var lembreteData in Model.ListaLembretes)
+			@*@foreach (var lembrete in Model)
 			{
-				<tr>
-					<th scope="row"></th>
-					<td>@lembreteData.Key.ToShortDateString()</td>
-					<td>
-						<ul class="list-group list-group-flush">
-							@foreach (var lembrete in lembreteData.Value)
+					<tr>
+						<th scope="row"></th>
+						<td>@lembrete.Data.ToShortDateString()</td>
+						<td>
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item">
+								@lembrete.Nome
+									<a class="btn btn-danger" role="button" onclick="confirmarExclusao('@lembrete.Id')">x</a>
+								</li>
+							</ul>
+						</td>
+					</tr>
+			}*@
+			
+			@foreach (var grupo in Model.GroupBy(l => l.Data.Date))
+			{
+					  <tr>
+						<th scope="row"></th>
+						<td>@grupo.Key.ToShortDateString()</td>
+						<td>
+							<ul class="list-group list-group-flush">
+							@foreach (var lembrete in grupo)
 							{
-					<li class="list-group-item">
+										<li class="list-group-item">
 									@lembrete.Nome
-						<a class="btn btn-danger" role="button" onclick="confirmarExclusao('@lembrete.Id')">x</a>
-					</li>
+											<a class="btn btn-danger" role="button" onclick="confirmarExclusao('@lembrete.Id')">x</a>
+										</li>
 							}
-
-						</ul>
-					</td>
-				</tr>
+							</ul>
+						</td>
+					</tr>
 			}
-</tbody>
-</table>
+		</tbody>
+	</table>
 </div>
 <script>
 	function confirmarExclusao(id) {

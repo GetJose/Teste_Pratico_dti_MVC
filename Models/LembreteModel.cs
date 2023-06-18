@@ -1,12 +1,16 @@
-﻿namespace Teste_Pratico_dti_MVC.Models
+﻿using System.Data;
+
+namespace Teste_Pratico_dti_MVC.Models
 {
 	public class LembreteModel
 	{
 		//atributos do lembrete
-		private int Id { get; set; }
-		private string nome { get; set; }
-		private DateTime data { get; set; }
+		public int Id { get; set; }
+		public string Nome { get; set; }
+		public DateTime Data { get; set; }
 		private static int cont;
+
+
 
 
 		// Construtor padrão
@@ -21,10 +25,10 @@
 		{
 			cont = cont + 1;
 			//verifica se os campos estão preenchidos corretamente, e só assim cria o lembrete
-			if (!string.IsNullOrEmpty(nome)  && data > DateTime.Now)
+			if (!string.IsNullOrEmpty(nome) && data > DateTime.Now)
 			{
-				this.nome = nome;
-				this.data = data;
+				this.Nome = nome;
+				this.Data = data;
 				this.Id = cont;
 			}
 			else
