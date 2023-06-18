@@ -2,9 +2,7 @@
 {
     public class LembreteModel
     {
-        // public int ID { get; set; }
-        // public string Nome { get; set; }
-        // public DateTime Data { get; set; }
+            //atributos do lembrete
             private string nome;
             private DateTime data;
 
@@ -40,9 +38,11 @@
 
             // Construtor padrão
             public LembreteModel() { }
-
+            
+            // construtor para os lembretes com os campos nome e data 
             public LembreteModel(string nome, DateTime data)
-            {
+            {   
+                //verifica se os campos estão preenchidos corretamente, e só assim cria o lembrete
                 if (!string.IsNullOrEmpty(nome) && TesteDataFutura(data))
                 {
                     this.nome = nome;

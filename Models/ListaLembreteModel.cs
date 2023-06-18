@@ -6,62 +6,48 @@
 
         public class ListaLembreteModel
         {
-        public Dictionary<DateTime, List<LembreteModel>> LembretesPorData { get; set; }
+        //Cria um dicionario para salvar os lembretes 
+        public Dictionary<DateTime, List<LembreteModel>> ListaLembretes { get; set; }
 
+        //construtor
         public ListaLembreteModel()
             {
-            LembretesPorData = new Dictionary<DateTime, List<LembreteModel>>();
+            ListaLembretes = new Dictionary<DateTime, List<LembreteModel>>();
             }
-
+            //Função para adicionar o lembrete Lista de lembretes
             public void AdicionarLembrete(LembreteModel lembrete)
-            {
+            {   
+                //Salva a data do lembrete em um aux
                 DateTime data = lembrete.Data;
-
-                if (LembretesPorData.ContainsKey(data))
+                //se no dicionario já contem aquela data, apenas adiciona o lembrete a ela 
+                if (ListaLembretes.ContainsKey(data))
                 {
-                LembretesPorData[data].Add(lembrete);
+                ListaLembretes[data].Add(lembrete);
                 }
                 else
                 {
-                LembretesPorData[data] = new List<LembreteModel> { lembrete };
+                //se não uma nova lista para aquela data é adicionada
+                ListaLembretes[data] = new List<LembreteModel> { lembrete };
                 }
             }
 
-            public List<LembreteModel> ExibirLembretes()
-            {
-                var lembretesOrdenados = new List<LembreteModel>();
-
-                var datasOrdenadas = LembretesPorData.Keys.OrderBy(d => d);
-
-                foreach (var data in datasOrdenadas)
-                {
-                    var lembretesData = LembretesPorData[data];
-                    lembretesOrdenados.AddRange(lembretesData);
-                }
-
-                return lembretesOrdenados;
-            }
-        
-        public bool RemoverLembrete(string nome)
+        //Função para remover os lembretes pelo nome dele 
+        public void RemoverLembrete(string nome)
         {
-            foreach (var lembretesData in LembretesPorData.Values)
+            foreach (var lembretesData in ListaLembretes.Values)
             {
                 var lembreteRemover = lembretesData.FirstOrDefault(l => l.Nome == nome);
                 if (lembreteRemover != null)
                 {
                     lembretesData.Remove(lembreteRemover);
-
+                    //se a data ficar sem lembretes após a remoção excluise ela
                     if (lembretesData.Count == 0)
                     {
-                        var dataRemover = LembretesPorData.FirstOrDefault(d => d.Value == lembretesData).Key;
-                        LembretesPorData.Remove(dataRemover);
+                        var dataRemover = ListaLembretes.FirstOrDefault(d => d.Value == lembretesData).Key;
+                        ListaLembretes.Remove(dataRemover);
                     }
-
-                    return true; // Indica que o lembrete foi removido com sucesso
                 }
             }
-
-            return false; // Indica que o lembrete não foi encontrado
         }
     }
     }

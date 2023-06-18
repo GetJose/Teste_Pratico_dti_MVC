@@ -2,13 +2,15 @@
 using Teste_Pratico_dti_MVC.Models;
 
 namespace Teste_Pratico_dti_MVC.Controllers
-{
+{   
+    //como ainda não tem Conexão com o BD esta usando a lista de lembretes estatica para salvar os lembretes
     public static class LembreteRepository
     {
         public static ListaLembreteModel ListaLembretes { get; } = new ListaLembreteModel();
     }
     public class LembreteController : Controller
-    {
+    {   
+        //Encaminha para a view de criar o lembrete
         public IActionResult CriarLembrete()
         {
             return View();
@@ -34,11 +36,8 @@ namespace Teste_Pratico_dti_MVC.Controllers
                         return View(lembrete);
                     }
 
-                    // Criar o lembrete com os dados recebidos do formulário
-                    LembreteModel novoLembrete = new LembreteModel(lembrete.Nome, lembrete.Data);
-
                     // Adicionar o lembrete à lista usando a instância de ListaLembretes compartilhada
-                    LembreteRepository.ListaLembretes.AdicionarLembrete(novoLembrete);
+                    LembreteRepository.ListaLembretes.AdicionarLembrete(lembrete);
 
                     return RedirectToAction("Index"); // Redirecionar para a página inicial após a criação do lembrete
                 }
@@ -55,12 +54,12 @@ namespace Teste_Pratico_dti_MVC.Controllers
         }
 
         public IActionResult Index()
-        {
+        {   //Criar a lista que aparece na view de acordo com a lista de lembrete 
             ListaLembreteModel model = LembreteRepository.ListaLembretes;
 
-            if (model.LembretesPorData.Any())
+            if (model.ListaLembretes.Any())//se ela não estiver vazia é ordenada para que as datas sejam mostradas em ordem cronologica 
             {
-                model.LembretesPorData = model.LembretesPorData.OrderBy(d => d.Key).ToDictionary(d => d.Key, d => d.Value);
+                model.ListaLembretes = model.ListaLembretes.OrderBy(d => d.Key).ToDictionary(d => d.Key, d => d.Value);
             }
 
             return View(model);
@@ -68,16 +67,8 @@ namespace Teste_Pratico_dti_MVC.Controllers
 
         public IActionResult Apagar(string nome)
         {
-            bool lembreteRemovido = LembreteRepository.ListaLembretes.RemoverLembrete(nome);
-
-            if (lembreteRemovido)
-            {
-                return RedirectToAction("Index"); // Redirecionar para a página inicial após a remoção do lembrete
-            }
-            else
-            {
-                return RedirectToAction("Index"); // Redirecionar para a página inicial caso o lembrete não seja encontrado
-            }
+             LembreteRepository.ListaLembretes.RemoverLembrete(nome);
+                return RedirectToAction("Index"); 
         }
 
     }
