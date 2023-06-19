@@ -1,9 +1,10 @@
-#DTI <h1>
-**Sistema de CriaÁ„o de lembrete seguindo o desafio pratico dti**
-Projeto desenvolvido no Visual studio, foi se ultilizado no projeto ASP.Net com o SDK 6.0.
-##Premissas assumidas<h3>
-Que o usuario preenchera os dados corretamente.
-##Decisıes de projeto<h3>
-ultilizar uma lista est·tica no lugar de um banco de dados, e uma vari·vel "cont" tambÈm est·tica para criar o ID de cada lembrete
-
+<h1>DTI </h1><br>
+<strong>Sistema de Cria√ß√£o de lembrete seguindo o desafio pratico dti</strong><br>
+<li>Projeto desenvolvido no Visual studio.</li> 
+<li>Foi-se ultilizado no projeto ASP.Net com o SDK 6.0. </li><br>
+<h3>Premissas assumidas</h3>
+<li>Que o usu√°rio preenchera os campos corretamente.</li> 
+<h3>Decis√µes de projeto</h3>
+<li>Ultilizar uma lista est√°tica no lugar de um banco de dados, e uma vari√°vel "cont" tamb√©m est√°tica para criar o ID de cada lembrete.</li>
+<li>Na exclus√£o a pesquisa pelo lembrete selecionado e feita pelo ID dele.</li>
 
