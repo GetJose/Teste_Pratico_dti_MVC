@@ -20,22 +20,6 @@
 	</tr>
   </thead>
  <tbody>
-			@*@foreach (var lembrete in Model)
-			{
-					<tr>
-						<th scope="row"></th>
-						<td>@lembrete.Data.ToShortDateString()</td>
-						<td>
-							<ul class="list-group list-group-flush">
-								<li class="list-group-item">
-								@lembrete.Nome
-									<a class="btn btn-danger" role="button" onclick="confirmarExclusao('@lembrete.Id')">x</a>
-								</li>
-							</ul>
-						</td>
-					</tr>
-			}*@
-			
 			@foreach (var grupo in Model.GroupBy(l => l.Data.Date))
 			{
 					  <tr>

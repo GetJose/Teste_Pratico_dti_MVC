@@ -25,6 +25,12 @@ namespace Teste_Pratico_dti_MVC.Controllers
 			{
 				if (ModelState.IsValid)
 				{
+					// Verificar se a data informada é válida
+					if (lembrete.Data < DateTime.Now)
+					{
+						ModelState.AddModelError("Data", "A data informada já passou. Insira uma data futura.");
+						return View(lembrete);
+					}
 					// Adicionar o lembrete à lista usando a instância de ListaLembretes compartilhada
 					LembreteRepository.ListaLembretes.Add(lembrete);
 
